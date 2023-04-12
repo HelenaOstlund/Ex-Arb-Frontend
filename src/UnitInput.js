@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import './unitInput.css';
 
 function UnitInput(props) {
     return (
