@@ -1,77 +1,101 @@
-import React from "react";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 function UnitConverter() {
-    const [weight1, setWeight1] = useState(1);
-    const [weight2, setWeight2] = useState(1);
-    const [unit1, setUnit1] = useState('l');
-    const [unit2, setUnit2] = useState('l');
-    const [units, setUnits] = useState(1)
+    const [units, setUnits] = useState([]);
+    const [sourceUnit, setSourceUnit] = useState(null);
+    const [destinationUnit, setDestinationUnit] = useState(null);
+    const [inputValue, setInputValue] = useState(0);
+    const [convertedValue, setConvertedValue] = useState(0);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/v1/auth/getAllUnits')
-            .then(response => {
-                //setUnits(response.data.units)
-                console.log(response.data);
+        axios
+            .get("http://localhost:8080/api/v1/auth/getAllUnits")
+            .then((response) => {
+                setUnits(response.data);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
     }, []);
 
+    function handleSourceUnitChange(event) {
+        const unitId = parseInt(event.target.value);
+        const unit = units.find((u) => u.id === unitId);
+        setSourceUnit(unit);
+    }
 
+    function handleDestinationUnitChange(event) {
+        const unitId = parseInt(event.target.value);
+        const unit = units.find((u) => u.id === unitId);
+        setDestinationUnit(unit);
+    }
+
+    function handleInputChange(event) {
+        const value = parseFloat(event.target.value);
+        setInputValue(value);
+    }
 
     useEffect(() => {
-        if (!!units) {
-            handleWeight1Change(1);
+        if (sourceUnit && destinationUnit) {
+            const convertedValue = convertUnits(sourceUnit, destinationUnit, inputValue);
+            setConvertedValue(convertedValue);
         }
-    }, [units]);
-
-    function format(number) {
-        return number.toFixed(4);
-    }
-
-    function handleWeight1Change(weight1) {
-        setWeight2(format(weight1 * units[unit2] / units[unit1]));
-        setWeight1(weight1);
-    }
-
-    function handleUnit1Change(unit1) {
-        setWeight2(format(weight1 * units[unit2] / units[unit1]));
-        setUnit1(unit1);
-    }
-
-    function handleWeight2Change(weight2) {
-        setWeight1(format(weight2 * units[unit1] / units[unit2]));
-        setWeight2(weight2);
-    }
-
-    function handleUnit2Change(unit2) {
-        setWeight1(format(weight2 * units[unit1] / units[unit2]));
-        setUnit2(unit2);
-    }
+    }, [sourceUnit, destinationUnit, inputValue]);
 
     return (
         <div>
             <h1>Unit Converter</h1>
-            <UnitInput
-                onWeightChange={handleWeight1Change}
-                onUnitChange={handleUnit1Change}
-                units={Object.keys(units)}
-                weight={weight1}
-                unit={unit1} />
-            <UnitInput
-                onWeightChange={handleWeight2Change}
-                onUnitChange={handleUnit2Change}
-                units={Object.keys(units)}
-                weight={weight2}
-                unit={unit2} />
-
-
+            <div>
+                <label>
+                    Source Unit:
+                    <select value={sourceUnit?.id || ""} onChange={handleSourceUnitChange}>
+                        <option value="">-- Select Source Unit --</option>
+                        {units.map((unit) => (
+                            <option key={unit.id} value={unit.id}>
+                                {unit.unitName} ({unit.unitType})
+                            </option>
+                        ))}
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>
+                    Destination Unit:
+                    <select value={destinationUnit?.id || ""} onChange={handleDestinationUnitChange}>
+                        <option value="">-- Select Destination Unit --</option>
+                        {units.map((unit) => (
+                            <option key={unit.id} value={unit.id}>
+                                {unit.unitName} ({unit.unitType})
+                            </option>
+                        ))}
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>
+                    Input Value:
+                    <input type="number" value={inputValue} onChange={handleInputChange} />
+                </label>
+            </div>
+            <div>
+                <p>Converted Value: {convertedValue}</p>
+            </div>
         </div>
-
     );
 }
+
+function convertUnits(sourceUnit, destinationUnit, value) {
+    const sourceRate = sourceUnit.conversionRate;
+    const destinationRate = destinationUnit.conversionRate;
+
+    // Calculate the conversion factor
+    const conversionFactor = destinationRate / sourceRate;
+
+    // Convert the value using the conversion factor
+    const convertedValue = value * conversionFactor;
+
+    return convertedValue;
+}
+
 export default UnitConverter;

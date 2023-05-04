@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import axios from "axios";
 
 
@@ -18,7 +18,7 @@ export default function Login() {
             .then((res) => {
                 localStorage.setItem("token", res.data.token);
                 localStorage.setItem("expiration", res.data.expiration);
-
+                console.log(res.data.token)
                 setIsSignedIn(true)
             })
             .catch((err) => {
