@@ -1,6 +1,12 @@
+import React from "react";
+import Register from '../Components/Register';
+
 export default function Admin() {
 
     return (
-        <h1>AdminPage</h1>
+        <div>
+            <h1>AdminPage</h1>
+            <Register />
+        </div>
     );
 }
