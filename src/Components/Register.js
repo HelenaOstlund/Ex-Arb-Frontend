@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+
 import axios from "axios";
 
 function Register() {
@@ -22,13 +22,14 @@ function Register() {
             .then((res) => {
                 localStorage.setItem("token", res.data.token);
                 setIsSignedIn(true)
+                window.alert("Registration successful!");
             })
             .catch((err) =>
                 console.log(err));
     }
-    if (isSignedIn) {
-        return <Navigate to="/Pages/Admin" />;
-    }
+    /* if (isSignedIn) {
+         return <Navigate to="/Pages/Admin" />;
+     }*/
 
     return (
         <div class="content">
