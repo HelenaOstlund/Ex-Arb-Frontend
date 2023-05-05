@@ -11,25 +11,21 @@ function Register() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!username || !password) {
-            setError("username and password required!");
+            setError("Username and password are required!");
         } else if (password.length < 4) {
-            setError("Password too short")
-        } else { }
-
-        const data = { username, password };
-        axios
-            .post("http://localhost:8080/api/v1/auth/register", data)
-            .then((res) => {
-                localStorage.setItem("token", res.data.token);
-                setIsSignedIn(true)
-                window.alert("Registration successful!");
-            })
-            .catch((err) =>
-                console.log(err));
-    }
-    /* if (isSignedIn) {
-         return <Navigate to="/Pages/Admin" />;
-     }*/
+            setError("Password is too short!");
+        } else {
+            const data = { username, password };
+            axios
+                .post("http://localhost:8080/api/v1/auth/register", data)
+                .then((res) => {
+                    localStorage.setItem("token", res.data.token);
+                    setIsSignedIn(true);
+                    window.alert("Registration successful!");
+                })
+                .catch((err) => console.log(err));
+        }
+    };
 
     return (
         <div class="content">
