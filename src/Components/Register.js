@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import axios from "axios";
+import "../Style.css";
 
 function Register() {
     const [username, setUsername] = useState("");
@@ -22,6 +23,8 @@ function Register() {
                     localStorage.setItem("token", res.data.token);
                     setIsSignedIn(true);
                     window.alert("Registration successful!");
+                    setUsername("");
+                    setPassword("");
                 })
                 .catch((err) => console.log(err));
         }

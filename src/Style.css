@@ -7,6 +7,9 @@
     text-align: center;
 }
 
+.button {
+    margin-top: 20px;
+}
 
 
 input,
@@ -15,4 +18,36 @@ select {
     border: 0;
     color: #fff;
     text-align: center;
+
+}
+
+.unit-converter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.unit-converter>div {
+    margin-bottom: 10px;
+}
+
+.unit-converter label {
+    width: 150px;
+    text-align: right;
+    margin-right: 20px;
+    text-align: left;
+}
+
+
+
+.nav-link {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.link {
+    margin-right: 10px;
+    color: #fff;
 }

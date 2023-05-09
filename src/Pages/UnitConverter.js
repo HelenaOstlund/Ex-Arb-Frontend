@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import "../Style.css";
 
 function UnitConverter() {
     const [units, setUnits] = useState([]);
@@ -45,41 +46,47 @@ function UnitConverter() {
 
     return (
         <div>
+            <div className="nav-link">
+                <a href="/login" className="link">Admin Login</a>
+            </div>
+
             <h1>Unit Converter</h1>
-            <div>
-                <label>
-                    Source Unit:
-                    <select value={sourceUnit?.id || ""} onChange={handleSourceUnitChange}>
-                        <option value="">-- Select Source Unit --</option>
-                        {units.map((unit) => (
-                            <option key={unit.id} value={unit.id}>
-                                {unit.unitName} ({unit.unitType})
-                            </option>
-                        ))}
-                    </select>
-                </label>
-            </div>
-            <div>
-                <label>
-                    Destination Unit:
-                    <select value={destinationUnit?.id || ""} onChange={handleDestinationUnitChange}>
-                        <option value="">-- Select Destination Unit --</option>
-                        {units.map((unit) => (
-                            <option key={unit.id} value={unit.id}>
-                                {unit.unitName} ({unit.unitType})
-                            </option>
-                        ))}
-                    </select>
-                </label>
-            </div>
-            <div>
-                <label>
-                    Input Value:
-                    <input type="number" value={inputValue} onChange={handleInputChange} />
-                </label>
-            </div>
-            <div>
-                <p>Converted Value: {convertedValue}</p>
+            <div className="unit-converter">
+                <div>
+                    <label>
+                        From:
+                        <select value={sourceUnit?.id || ""} onChange={handleSourceUnitChange}>
+                            <option value="">-- Select Source Unit --</option>
+                            {units.map((unit) => (
+                                <option key={unit.id} value={unit.id}>
+                                    {unit.unitName} ({unit.unitType})
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        To:
+                        <select value={destinationUnit?.id || ""} onChange={handleDestinationUnitChange}>
+                            <option value="">-- Select Destination Unit --</option>
+                            {units.map((unit) => (
+                                <option key={unit.id} value={unit.id}>
+                                    {unit.unitName} ({unit.unitType})
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Input Value:
+                        <input type="number" value={inputValue} onChange={handleInputChange} />
+                    </label>
+                </div>
+                <div>
+                    <p>Converted Value: {convertedValue}</p>
+                </div>
             </div>
         </div>
     );
@@ -90,7 +97,7 @@ function convertUnits(sourceUnit, destinationUnit, value) {
     const destinationRate = destinationUnit.conversionRate;
 
     // Calculate the conversion factor
-    const conversionFactor = destinationRate / sourceRate;
+    const conversionFactor = sourceRate / destinationRate;
 
     // Convert the value using the conversion factor
     const convertedValue = value * conversionFactor;

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../Style.css";
 
 function DeleteUnit() {
     const [unitId, setUnitId] = useState("");
