@@ -10,6 +10,8 @@ export default function Admin() {
 
     return (
         <div>
+            <LogoutButton className="logout-button" />
+
             <h1>AdminPage</h1>
 
             <div className="admin-container">
@@ -18,7 +20,7 @@ export default function Admin() {
                 <DeleteUser />
                 <CreateUnit />
                 <DeleteUnit />
-                <LogoutButton />
+
             </div>
         </div>
     );
