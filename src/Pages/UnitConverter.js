@@ -51,7 +51,7 @@ function UnitConverter() {
                 <a href="/login" className="link">Admin Login</a>
             </div>
 
-            <h1>Unit Converter</h1>
+            <h1>Baking Unit Converter</h1>
             <div className="unit-converter">
                 <div>
                     <label>
