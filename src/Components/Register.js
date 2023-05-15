@@ -6,8 +6,8 @@ import "../Style.css";
 function Register() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [isSignedIn, setIsSignedIn] = useState(false);
-    const [error, setError] = useState("");
+    const [setIsSignedIn] = useState(false);
+    const [setError] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
