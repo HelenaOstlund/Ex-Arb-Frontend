@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "../Style.css";
+import TemperatureConverter from "../Components/TemperatureConverter";
 
 function UnitConverter() {
     const [units, setUnits] = useState([]);
@@ -86,6 +87,12 @@ function UnitConverter() {
                 </div>
                 <div>
                     <p>Converted Value: {convertedValue}</p>
+                </div>
+            </div>
+            <div>
+
+                <div>
+                    <TemperatureConverter />
                 </div>
             </div>
         </div>
